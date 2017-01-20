@@ -1,6 +1,8 @@
 /** @jsx React.DOM */
 
 var React = require('react');
+var ReactDOM = require('react-dom');
+
 var List = require('./list.jsx');
 var Details = require('./details.jsx');
 var Menu = require('./menu.jsx');
@@ -13,18 +15,17 @@ var App = React.createClass({
         this.setState({selected: email});
     },
     removeAllEmails: function () {
+        this.setState({selected: null});
         clearAllMails();
     },
     render: function () {
         return (
             <div className="app">
-
                 <List emails={this.props.emails}
                       selected={this.state.selected}
                       onEmailSelected={this.handleEmailSelected}/>
                 <Details email={this.state.selected}/>
-                <Menu removeAllEmails={this.removeAllEmails}
-                      />
+                <Menu removeAllEmails={this.removeAllEmails}/>
             </div>);
     }
 });
@@ -36,7 +37,7 @@ var emails = [];
 
 function init(mails) {
     emails = mails;
-    React.renderComponent(<App emails={emails.slice().reverse()}/>, document.body);
+    ReactDOM.render(<App emails={emails.slice().reverse()}/>, document.getElementById('app'));
 }
 
 function clearAllMails() {
